@@ -5,7 +5,6 @@ def create_visualizations(df, results):
 
     os.makedirs("outputs/graphs", exist_ok=True)
 
-    # SPEED OVER TIME
     plt.figure()
     plt.plot(df["speed"][:500])
     plt.title("Telemetry Speed Over Time (Including Pit Strategy)")
@@ -14,7 +13,6 @@ def create_visualizations(df, results):
     plt.savefig("outputs/graphs/speed_over_time.png")
     plt.close()
 
-    # LAP PERFORMANCE
     plt.figure()
     results["avg_lap_speed"].plot()
     plt.title("Lap Performance Trend")
@@ -23,7 +21,6 @@ def create_visualizations(df, results):
     plt.savefig("outputs/graphs/lap_performance.png")
     plt.close()
 
-    # PIT IMPACT VISUAL
     plt.figure()
     df.groupby("lap")["is_pit_lap"].sum().plot(kind="bar")
     plt.title("Pit Stop Occurrence per Lap")
