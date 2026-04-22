@@ -1,17 +1,17 @@
 def analyze_data(df):
     results = {}
 
-    # Average speed per lap
-    lap_speeds = df.groupby("lap")["speed"].mean()
-    results["avg_lap_speed"] = lap_speeds
+    # Lap speed averages
+    results["avg_lap_speed"] = df.groupby("lap")["speed"].mean()
 
-    # Consistency (lower std = more consistent performance)
+    # Consistency
     results["speed_variability"] = df.groupby("lap")["speed"].std()
 
-    # Detect performance drop
-    results["performance_trend"] = lap_speeds.diff()
-
-    # Efficiency metric (simple derived model)
+    # Efficiency
     results["efficiency"] = df["speed"] / df["throttle"]
+
+    # PIT STOP ANALYSIS
+    pit_laps = df[df["is_pit_lap"] == 1]
+    results["pit_lap_impact"] = pit_laps["speed"].mean() if len(pit_laps) > 0 else None
 
     return results
